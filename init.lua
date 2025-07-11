@@ -271,7 +271,7 @@ require('lazy').setup({
   -- after the plugin has been loaded:
   --  config = function() ... end
 
-  {                     -- Useful plugin to show you pending keybinds.
+  { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
@@ -314,7 +314,7 @@ require('lazy').setup({
 
       -- Document existing key chains
       spec = {
-        { '<leader>c', group = '[C]ode',     mode = { 'n', 'x' } },
+        { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
@@ -325,14 +325,12 @@ require('lazy').setup({
     },
   },
 
-
   -- NOTE: Plugins can specify dependencies.
   --
   -- The dependencies are proper plugin specifications as well - anything
   -- you do for a plugin at the top level, you can do for a dependency.
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
-
 
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
@@ -356,7 +354,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -452,7 +450,7 @@ require('lazy').setup({
       },
     },
   },
-  { 'Bilal2453/luvit-meta',     lazy = true },
+  { 'Bilal2453/luvit-meta', lazy = true },
   {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
@@ -464,7 +462,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       opts = {} },
+      { 'j-hui/fidget.nvim', opts = {} },
 
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
@@ -826,23 +824,31 @@ require('lazy').setup({
     end,
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  {
     'folke/rose-pine',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
+    priority = 1000,
     init = function()
-      require('rose-pine').setup({
-        disable_background = true, -- Usuwa tło, dzięki czemu terminal przejmie przezroczystość
-      })
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'rose-pine-moon'
+      local hostname = vim.fn.hostname()
 
-      -- You can configure highlights by doing something like:
+      -- Ustawienia wspólne dla rose-pine (jeśli będzie używany)
+      require('rose-pine').setup {
+        disable_background = true,
+      }
+
+      if hostname == 'asus' then
+        vim.cmd.colorscheme 'rose-pine-moon'
+      elseif hostname == 'DITNOT169' then
+        vim.o.background = 'light'
+        pcall(vim.cmd.colorscheme, 'solarized')
+      elseif hostname == 'x220' then
+        vim.o.background = 'dark'
+        pcall(vim.cmd.colorscheme, 'evening') -- lub "habamax", "default", "tender", jak wolisz
+      else
+        -- fallback
+        vim.cmd.colorscheme 'rose-pine-moon'
+      end
+
+      -- Przykład dodatkowego highlightu
       vim.cmd.hi 'Comment gui=none'
     end,
   },
