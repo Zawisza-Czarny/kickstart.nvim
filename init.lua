@@ -823,32 +823,28 @@ require('lazy').setup({
       }
     end,
   },
-
   {
     'folke/rose-pine',
     priority = 1000,
     init = function()
-      local hostname = vim.fn.hostname()
+      local hostname = io.popen('hostname'):read '*l'
 
-      -- Ustawienia wspólne dla rose-pine (jeśli będzie używany)
       require('rose-pine').setup {
         disable_background = true,
       }
 
-      if hostname == 'asus' then
+      if hostname:match 'asus' then
         vim.cmd.colorscheme 'rose-pine-moon'
-      elseif hostname == 'DITNOT169' then
+      elseif hostname:match 'ditnot169' then
         vim.o.background = 'light'
         pcall(vim.cmd.colorscheme, 'solarized')
-      elseif hostname == 'x220' then
+      elseif hostname:match 'x220' then
         vim.o.background = 'dark'
-        pcall(vim.cmd.colorscheme, 'evening') -- lub "habamax", "default", "tender", jak wolisz
+        pcall(vim.cmd.colorscheme, 'evening')
       else
-        -- fallback
-        vim.cmd.colorscheme 'rose-pine-moon'
+        vim.cmd.colorscheme 'rose-pine-moon' -- fallback
       end
 
-      -- Przykład dodatkowego highlightu
       vim.cmd.hi 'Comment gui=none'
     end,
   },
