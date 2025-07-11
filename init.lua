@@ -841,18 +841,14 @@ require('lazy').setup({
       }
 
       if hostname:match 'asus' then
-        print 'Loading rose-pine-moon'
         vim.cmd.colorscheme 'rose-pine-moon'
       elseif hostname:match 'ditnot169' then
-        print 'Loading solarized'
         vim.o.background = 'light'
         pcall(vim.cmd.colorscheme, 'solarized')
       elseif hostname:match 'x220' then
-        print 'Loading evening'
         vim.o.background = 'dark'
         pcall(vim.cmd.colorscheme, 'evening')
       else
-        print 'Fallback to rose-pine'
         vim.cmd.colorscheme 'rose-pine-moon'
       end
 
