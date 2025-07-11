@@ -827,22 +827,33 @@ require('lazy').setup({
     'folke/rose-pine',
     priority = 1000,
     init = function()
-      local hostname = io.popen('hostname'):read '*l'
+      local handle = io.popen 'hostname'
+      local hostname = handle and handle:read '*l' or 'unknown'
+      if handle then
+        handle:close()
+      end
+      hostname = hostname:lower()
+
+      print('hostname: ' .. hostname)
 
       require('rose-pine').setup {
         disable_background = true,
       }
 
       if hostname:match 'asus' then
+        print 'Loading rose-pine-moon'
         vim.cmd.colorscheme 'rose-pine-moon'
       elseif hostname:match 'ditnot169' then
+        print 'Loading solarized'
         vim.o.background = 'light'
         pcall(vim.cmd.colorscheme, 'solarized')
       elseif hostname:match 'x220' then
+        print 'Loading evening'
         vim.o.background = 'dark'
         pcall(vim.cmd.colorscheme, 'evening')
       else
-        vim.cmd.colorscheme 'rose-pine-moon' -- fallback
+        print 'Fallback to rose-pine'
+        vim.cmd.colorscheme 'rose-pine-moon'
       end
 
       vim.cmd.hi 'Comment gui=none'
