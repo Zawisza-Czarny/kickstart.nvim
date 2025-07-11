@@ -3,6 +3,9 @@
 --
 -- See the kickstart.nvim README for more information
 return {
+
+  -- amongst your other plugins
+
   { 'rose-pine/neovim', name = 'rose-pine' },
   {
     'nvimdev/dashboard-nvim',
