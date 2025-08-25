@@ -847,7 +847,7 @@ require('lazy').setup({
         pcall(vim.cmd.colorscheme, 'solarized')
       elseif hostname:match 'x220' then
         vim.o.background = 'dark'
-        pcall(vim.cmd.colorscheme, 'evening')
+        pcall(vim.cmd.colorscheme, 'rose-pine-moon')
       else
         vim.cmd.colorscheme 'rose-pine-moon'
       end
